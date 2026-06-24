@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pip & Position — Trade Crypto Futures With a Plan, Not a Prayer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1320;
+    --ink-soft:#162236;
+    --bone:#F2EFE6;
+    --bone-dim:#E7E2D3;
+    --amber:#D98E3C;
+    --amber-soft:#F0C896;
+    --sage:#5C8A6E;
+    --brick:#A6453A;
+    --line: rgba(242,239,230,0.14);
+    --line-strong: rgba(242,239,230,0.26);
+    --max: 1180px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    line-height:1.08;
+  }
+
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.02em;
+  }
+
+  .wrap{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  ::selection{background:var(--amber); color:var(--ink);}
+
+  :focus-visible{
+    outline:2px solid var(--amber);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,19,32,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:18px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    font-family:'Fraunces', serif;
+    font-size:20px;
+    font-weight:600;
+  }
+  .brand .tick{
+    color:var(--amber);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    font-weight:500;
+  }
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-size:14px;
+    color:var(--bone-dim);
+  }
+  .nav-links a{
+    position:relative;
+    padding:4px 0;
+    transition:color 0.2s ease;
+  }
+  .nav-links a:hover{color:var(--bone);}
+  .nav-cta{
+    background:var(--amber);
+    color:var(--ink);
+    padding:10px 20px;
+    border-radius:3px;
+    font-weight:600;
+    font-size:14px;
+    transition:background 0.2s ease, transform 0.2s ease;
+    display:inline-block;
+  }
+  .nav-cta:hover{background:var(--amber-soft); transform:translateY(-1px);}
+  .nav-mobile-hide{display:flex;}
+
+  @media (max-width:760px){
+    .nav-mobile-hide{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:84px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-20%; right:-10%;
+    width:560px; height:560px;
+    background:radial-gradient(circle, rgba(217,142,60,0.10), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:920px){
+    .hero-grid{grid-template-columns:1fr; gap:40px;}
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--amber-soft);
+    border:1px solid var(--line-strong);
+    padding:7px 14px;
+    border-radius:100px;
+    margin-bottom:28px;
+  }
+  .eyebrow .dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--sage);
+    box-shadow:0 0 0 3px rgba(92,138,110,0.25);
+  }
+
+  .hero h1{
+    font-size:clamp(34px, 4.6vw, 56px);
+    color:var(--bone);
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--amber);
+  }
+
+  .hero-sub{
+    font-size:17.5px;
+    color:var(--bone-dim);
+    max-width:520px;
+    margin-bottom:34px;
+  }
+
+  .hero-ctas{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:28px;
+  }
+
+  .btn-primary{
+    background:var(--amber);
+    color:var(--ink);
+    padding:15px 28px;
+    border-radius:3px;
+    font-weight:700;
+    font-size:15.5px;
+    border:none;
+    cursor:pointer;
+    transition:background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow:0 0 0 0 rgba(217,142,60,0.4);
+  }
+  .btn-primary:hover{
+    background:var(--amber-soft);
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px -8px rgba(217,142,60,0.5);
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--bone);
+    padding:15px 24px;
+    border-radius:3px;
+    font-weight:600;
+    font-size:15.5px;
+    border:1px solid var(--line-strong);
+    cursor:pointer;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .btn-ghost:hover{
+    border-color:var(--bone);
+    background:rgba(242,239,230,0.04);
+  }
+
+  .hero-meta{
+    display:flex;
+    gap:22px;
+    font-size:13px;
+    color:var(--bone-dim);
+    flex-wrap:wrap;
+  }
+  .hero-meta span{display:flex; align-items:center; gap:7px;}
+  .hero-meta svg{flex-shrink:0;}
+
+  /* ---------- CHART (signature element) ---------- */
+  .chart-card{
+    background:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:22px 22px 18px;
+    position:relative;
+  }
+  .chart-card-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+  }
+  .chart-card-head .pair{color:var(--bone); font-weight:600; font-size:13px;}
+  .chart-card-head .price{color:var(--sage);}
+  .chart-svg-wrap{
+    width:100%;
+    aspect-ratio: 16/10;
+  }
+  .chart-foot{
+    display:flex;
+    justify-content:space-between;
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--bone-dim);
+  }
+  .chart-foot b{color:var(--bone); font-weight:600;}
+
+  .candle{
+    transform-origin:bottom;
+    animation:growCandle 0.5s cubic-bezier(.2,.8,.2,1) backwards;
+  }
+  .wick{
+    opacity:0;
+    animation:fadeIn 0.3s ease forwards;
+  }
+  @keyframes growCandle{
+    from{transform:scaleY(0);}
+    to{transform:scaleY(1);}
+  }
+  @keyframes fadeIn{
+    to{opacity:1;}
+  }
+  .chart-line{
+    stroke-dasharray:1000;
+    stroke-dashoffset:1000;
+    animation:drawLine 1.8s cubic-bezier(.2,.7,.2,1) forwards;
+    animation-delay:0.6s;
+  }
+  @keyframes drawLine{
+    to{stroke-dashoffset:0;}
+  }
+
+  /* ---------- LOGO / STAT STRIP ---------- */
+  .strip{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:30px 0;
+  }
+  .strip-inner{
+    display:flex;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .strip-item{
+    flex:1;
+    min-width:140px;
+  }
+  .strip-item .num{
+    font-family:'Fraunces', serif;
+    font-size:30px;
+    color:var(--amber);
+    font-weight:600;
+  }
+  .strip-item .label{
+    font-size:13px;
+    color:var(--bone-dim);
+    margin-top:2px;
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:96px 0;}
+  .section-head{
+    max-width:640px;
+    margin-bottom:56px;
+  }
+  .section-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--amber);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:14px;
+    display:block;
+  }
+  .section-head h2{
+    font-size:clamp(28px, 3.4vw, 40px);
+    color:var(--bone);
+  }
+  .section-head p{
+    color:var(--bone-dim);
+    margin-top:16px;
+    font-size:16.5px;
+  }
+
+  /* ---------- PAIN POINTS ---------- */
+  .pain-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  @media (max-width:820px){
+    .pain-grid{grid-template-columns:1fr;}
+  }
+  .pain-cell{
+    background:var(--ink);
+    padding:34px 30px;
+  }
+  .pain-cell .glyph{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--brick);
+    font-size:13px;
+    margin-bottom:18px;
+    display:block;
+  }
+  .pain-cell h3{
+    font-size:19px;
+    color:var(--bone);
+    margin-bottom:10px;
+    font-weight:600;
+  }
+  .pain-cell p{
+    color:var(--bone-dim);
+    font-size:14.5px;
+  }
+
+  /* ---------- METHOD / TIMELINE ---------- */
+  .method{
+    background:var(--ink-soft);
+    border-radius:8px;
+    border:1px solid var(--line);
+    padding:56px;
+  }
+  @media (max-width:760px){
+    .method{padding:36px 24px;}
+  }
+  .method-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:0;
+  }
+  @media (max-width:920px){
+    .method-grid{grid-template-columns:1fr; gap:36px;}
+  }
+  .method-step{
+    position:relative;
+    padding-right:28px;
+  }
+  .method-step:not(:last-child){
+    border-right:1px solid var(--line);
+  }
+  @media (max-width:920px){
+    .method-step:not(:last-child){border-right:none; border-bottom:1px solid var(--line); padding-bottom:28px;}
+  }
+  .method-step .phase{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--sage);
+    margin-bottom:14px;
+    display:block;
+  }
+  .method-step h4{
+    font-size:18px;
+    color:var(--bone);
+    margin-bottom:10px;
+  }
+  .method-step p{
+    font-size:14px;
+    color:var(--bone-dim);
+  }
+
+  /* ---------- CURRICULUM / WHAT YOU GET ---------- */
+  .curriculum{
+    display:grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap:60px;
+    align-items:start;
+  }
+  @media (max-width:920px){
+    .curriculum{grid-template-columns:1fr; gap:40px;}
+  }
+  .module{
+    display:flex;
+    gap:20px;
+    padding:24px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .module:first-child{padding-top:0;}
+  .module .idx{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--amber);
+    flex-shrink:0;
+    width:34px;
+    padding-top:3px;
+  }
+  .module h4{
+    font-size:17px;
+    color:var(--bone);
+    margin-bottom:6px;
+    font-weight:600;
+  }
+  .module p{
+    font-size:14.5px;
+    color:var(--bone-dim);
+  }
+
+  .sticky-card{
+    background:var(--ink-soft);
+    border:1px solid var(--line-strong);
+    border-radius:8px;
+    padding:36px;
+    position:sticky;
+    top:100px;
+  }
+  .sticky-card h3{
+    font-size:22px;
+    color:var(--bone);
+    margin-bottom:6px;
+  }
+  .sticky-card .price-row{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin:18px 0 6px;
+  }
+  .sticky-card .price{
+    font-family:'Fraunces', serif;
+    font-size:42px;
+    color:var(--amber);
+    font-weight:600;
+  }
+  .sticky-card .was{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--bone-dim);
+    text-decoration:line-through;
+    font-size:15px;
+  }
+  .sticky-card .price-note{
+    font-size:13px;
+    color:var(--bone-dim);
+    margin-bottom:24px;
+  }
+  .check-list{
+    list-style:none;
+    margin-bottom:28px;
+  }
+  .check-list li{
+    display:flex;
+    gap:10px;
+    font-size:14.5px;
+    color:var(--bone-dim);
+    padding:8px 0;
+    border-top:1px solid var(--line);
+  }
+  .check-list li:first-child{border-top:none;}
+  .check-list svg{flex-shrink:0; margin-top:3px; color:var(--sage);}
+  .sticky-card .btn-primary{
+    width:100%;
+    text-align:center;
+    margin-bottom:14px;
+  }
+  .sticky-card .fine{
+    font-size:12.5px;
+    color:var(--bone-dim);
+    text-align:center;
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .quote-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+  }
+  @media (max-width:920px){
+    .quote-grid{grid-template-columns:1fr;}
+  }
+  .quote-card{
+    background:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:28px;
+  }
+  .quote-card .stars{
+    color:var(--amber);
+    font-size:13px;
+    margin-bottom:16px;
+    letter-spacing:2px;
+  }
+  .quote-card p{
+    font-size:14.5px;
+    color:var(--bone-dim);
+    margin-bottom:20px;
+  }
+  .quote-who{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:13.5px;
+  }
+  .quote-avatar{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--amber), var(--brick));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:13px;
+    color:var(--ink);
+  }
+  .quote-who .name{color:var(--bone); font-weight:600;}
+  .quote-who .role{color:var(--bone-dim); font-size:12.5px;}
+
+  /* ---------- FAQ ---------- */
+  .faq-item{
+    border-bottom:1px solid var(--line);
+  }
+  .faq-q{
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    color:var(--bone);
+    font-family:'Fraunces', serif;
+    font-size:18px;
+    font-weight:500;
+    padding:24px 0;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+  }
+  .faq-q .plus{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--amber);
+    font-size:20px;
+    flex-shrink:0;
+    transition:transform 0.25s ease;
+  }
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+  }
+  .faq-a-inner{
+    padding-bottom:24px;
+    color:var(--bone-dim);
+    font-size:14.5px;
+    max-width:680px;
+  }
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{
+    background:linear-gradient(135deg, var(--ink-soft), var(--ink));
+    border:1px solid var(--line-strong);
+    border-radius:10px;
+    padding:64px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  @media (max-width:760px){
+    .final-cta{padding:44px 24px;}
+  }
+  .final-cta::after{
+    content:"";
+    position:absolute;
+    bottom:-40%; left:50%;
+    transform:translateX(-50%);
+    width:600px; height:300px;
+    background:radial-gradient(ellipse, rgba(217,142,60,0.14), transparent 70%);
+  }
+  .final-cta h2{
+    font-size:clamp(26px, 3.6vw, 38px);
+    color:var(--bone);
+    margin-bottom:16px;
+    position:relative;
+  }
+  .final-cta p{
+    color:var(--bone-dim);
+    max-width:480px;
+    margin:0 auto 32px;
+    position:relative;
+    font-size:16px;
+  }
+  .final-cta .hero-ctas{justify-content:center; position:relative;}
+
+  /* ---------- RISK DISCLOSURE ---------- */
+  .risk-box{
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:24px 28px;
+    background:var(--ink-soft);
+    font-size:13px;
+    color:var(--bone-dim);
+    line-height:1.7;
+  }
+  .risk-box .risk-label{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--brick);
+    font-size:12px;
+    letter-spacing:0.05em;
+    display:block;
+    margin-bottom:10px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:48px 0 36px;
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:40px;
+    flex-wrap:wrap;
+    gap:24px;
+  }
+  .footer-links{
+    display:flex;
+    gap:32px;
+    font-size:13.5px;
+    color:var(--bone-dim);
+    flex-wrap:wrap;
+  }
+  .footer-bottom{
+    font-size:12.5px;
+    color:var(--bone-dim);
+    opacity:0.7;
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">Pip&nbsp;&amp;&nbsp;Position <span class="tick">/FUT</span></div>
+    <div class="nav-links nav-mobile-hide">
+      <a href="#method">Method</a>
+      <a href="#curriculum">Curriculum</a>
+      <a href="#results">Results</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="#enroll" class="nav-cta">Enroll Now</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> NEXT COHORT OPENS JULY 7</div>
+      <h1>Stop guessing your way<br>through <em>leverage.</em></h1>
+      <p class="hero-sub">A structured, risk-first framework for trading crypto futures — position sizing, funding rates, and exit logic explained the way you wish someone had explained them the first time. No signals to follow blindly. No promises of guaranteed returns.</p>
+      <div class="hero-ctas">
+        <a href="#enroll" class="btn-primary">See the Curriculum</a>
+        <a href="#method" class="btn-ghost">How It Works</a>
+      </div>
+      <div class="hero-meta">
+        <span class="mono"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> 6-week program</span>
+        <span class="mono"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Live trade reviews</span>
+        <span class="mono"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Lifetime access</span>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-card-head">
+        <span class="pair">BTC/USDT · PERP</span>
+        <span class="price">+4.82%</span>
+      </div>
+      <div class="chart-svg-wrap">
+        <svg viewBox="0 0 400 250" width="100%" height="100%" preserveAspectRatio="none">
+          <!-- gridlines -->
+          <g stroke="rgba(242,239,230,0.08)" stroke-width="1">
+            <line x1="0" y1="40" x2="400" y2="40"/>
+            <line x1="0" y1="90" x2="400" y2="90"/>
+            <line x1="0" y1="140" x2="400" y2="140"/>
+            <line x1="0" y1="190" x2="400" y2="190"/>
+          </g>
+          <!-- candles -->
+          <g>
+            <rect class="candle" x="14" y="170" width="10" height="30" fill="#5C8A6E" style="animation-delay:0.05s"/>
+            <line class="wick" x1="19" y1="160" x2="19" y2="210" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.1s"/>
+
+            <rect class="candle" x="34" y="150" width="10" height="40" fill="#A6453A" style="animation-delay:0.1s"/>
+            <line class="wick" x1="39" y1="140" x2="39" y2="198" stroke="#A6453A" stroke-width="1.5" style="animation-delay:0.15s"/>
+
+            <rect class="candle" x="54" y="160" width="10" height="22" fill="#5C8A6E" style="animation-delay:0.15s"/>
+            <line class="wick" x1="59" y1="150" x2="59" y2="190" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.2s"/>
+
+            <rect class="candle" x="74" y="130" width="10" height="45" fill="#5C8A6E" style="animation-delay:0.2s"/>
+            <line class="wick" x1="79" y1="120" x2="79" y2="182" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.25s"/>
+
+            <rect class="candle" x="94" y="145" width="10" height="20" fill="#A6453A" style="animation-delay:0.25s"/>
+            <line class="wick" x1="99" y1="138" x2="99" y2="172" stroke="#A6453A" stroke-width="1.5" style="animation-delay:0.3s"/>
+
+            <rect class="candle" x="114" y="110" width="10" height="48" fill="#5C8A6E" style="animation-delay:0.3s"/>
+            <line class="wick" x1="119" y1="100" x2="119" y2="165" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.35s"/>
+
+            <rect class="candle" x="134" y="100" width="10" height="22" fill="#5C8A6E" style="animation-delay:0.35s"/>
+            <line class="wick" x1="139" y1="92" x2="139" y2="128" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.4s"/>
+
+            <rect class="candle" x="154" y="118" width="10" height="28" fill="#A6453A" style="animation-delay:0.4s"/>
+            <line class="wick" x1="159" y1="108" x2="159" y2="152" stroke="#A6453A" stroke-width="1.5" style="animation-delay:0.45s"/>
+
+            <rect class="candle" x="174" y="95" width="10" height="35" fill="#5C8A6E" style="animation-delay:0.45s"/>
+            <line class="wick" x1="179" y1="86" x2="179" y2="136" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.5s"/>
+
+            <rect class="candle" x="194" y="80" width="10" height="30" fill="#5C8A6E" style="animation-delay:0.5s"/>
+            <line class="wick" x1="199" y1="70" x2="199" y2="116" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.55s"/>
+
+            <rect class="candle" x="214" y="95" width="10" height="22" fill="#A6453A" style="animation-delay:0.55s"/>
+            <line class="wick" x1="219" y1="88" x2="219" y2="122" stroke="#A6453A" stroke-width="1.5" style="animation-delay:0.6s"/>
+
+            <rect class="candle" x="234" y="70" width="10" height="38" fill="#5C8A6E" style="animation-delay:0.6s"/>
+            <line class="wick" x1="239" y1="60" x2="239" y2="114" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.65s"/>
+
+            <rect class="candle" x="254" y="60" width="10" height="25" fill="#5C8A6E" style="animation-delay:0.65s"/>
+            <line class="wick" x1="259" y1="50" x2="259" y2="92" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.7s"/>
+
+            <rect class="candle" x="274" y="72" width="10" height="20" fill="#A6453A" style="animation-delay:0.7s"/>
+            <line class="wick" x1="279" y1="64" x2="279" y2="98" stroke="#A6453A" stroke-width="1.5" style="animation-delay:0.75s"/>
+
+            <rect class="candle" x="294" y="50" width="10" height="35" fill="#5C8A6E" style="animation-delay:0.75s"/>
+            <line class="wick" x1="299" y1="42" x2="299" y2="92" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.8s"/>
+
+            <rect class="candle" x="314" y="38" width="10" height="28" fill="#5C8A6E" style="animation-delay:0.8s"/>
+            <line class="wick" x1="319" y1="30" x2="319" y2="72" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.85s"/>
+
+            <rect class="candle" x="334" y="48" width="10" height="20" fill="#A6453A" style="animation-delay:0.85s"/>
+            <line class="wick" x1="339" y1="40" x2="339" y2="74" stroke="#A6453A" stroke-width="1.5" style="animation-delay:0.9s"/>
+
+            <rect class="candle" x="354" y="30" width="10" height="32" fill="#5C8A6E" style="animation-delay:0.9s"/>
+            <line class="wick" x1="359" y1="22" x2="359" y2="68" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:0.95s"/>
+
+            <rect class="candle" x="374" y="22" width="10" height="24" fill="#5C8A6E" style="animation-delay:0.95s"/>
+            <line class="wick" x1="379" y1="14" x2="379" y2="52" stroke="#5C8A6E" stroke-width="1.5" style="animation-delay:1s"/>
+          </g>
+          <!-- trend line overlay -->
+          <path class="chart-line" d="M19,195 L39,180 L59,175 L79,155 L99,158 L119,135 L139,112 L159,128 L179,110 L199,90 L219,103 L239,85 L259,68 L279,80 L299,62 L319,48 L339,55 L359,38 L379,28" fill="none" stroke="#D98E3C" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="chart-foot">
+        <span>Liq. price: <b>$58,210</b></span>
+        <span>Funding: <b>0.011%</b></span>
+        <span>Leverage: <b>5x</b></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap strip-inner">
+    <div class="strip-item">
+      <div class="num mono">6</div>
+      <div class="label">weeks, structured curriculum</div>
+    </div>
+    <div class="strip-item">
+      <div class="num mono">240+</div>
+      <div class="label">hours of recorded trade breakdowns</div>
+    </div>
+    <div class="strip-item">
+      <div class="num mono">3</div>
+      <div class="label">live review sessions weekly</div>
+    </div>
+    <div class="strip-item">
+      <div class="num mono">1:1</div>
+      <div class="label">risk audit on your trading plan</div>
+    </div>
+  </div>
+</div>
+
+<section id="pain">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">The Problem</span>
+      <h2>You're not undisciplined. You're untrained.</h2>
+      <p>Most people don't blow up their futures account because they're reckless — they blow it up because no one ever taught them the mechanics underneath the chart. These are the three patterns we see most.</p>
+    </div>
+
+    <div class="pain-grid">
+      <div class="pain-cell reveal">
+        <span class="glyph mono">// 01</span>
+        <h3>Liquidated by leverage you didn't understand</h3>
+        <p>You picked a leverage multiple because it "felt aggressive enough," not because you'd calculated your actual position size against your stop. One wick and you're out.</p>
+      </div>
+      <div class="pain-cell reveal">
+        <span class="glyph mono">// 02</span>
+        <h3>Paying funding fees you never see coming</h3>
+        <p>You held a position through a funding window with no idea it was costing you, slowly bleeding a "winning" trade into a breakeven — or worse.</p>
+      </div>
+      <div class="pain-cell reveal">
+        <span class="glyph mono">// 03</span>
+        <h3>A strategy that's really just a feeling</h3>
+        <p>You can explain why you entered a trade after it works. You can't explain it before. That's not a strategy — that's a story you tell yourself afterward.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">The Approach</span>
+      <h2>Risk management first. Entries second.</h2>
+      <p>Every module is built in this order, because this is the order that keeps your account alive long enough to get good.</p>
+    </div>
+
+    <div class="method reveal">
+      <div class="method-grid">
+        <div class="method-step">
+          <span class="phase mono">PHASE 1</span>
+          <h4>Position sizing</h4>
+          <p>Calculate size from your risk per trade, not your conviction. Every trade pre-sized before you place it.</p>
+        </div>
+        <div class="method-step">
+          <span class="phase mono">PHASE 2</span>
+          <h4>Market structure</h4>
+          <p>Read trend, range, and liquidity zones without fifteen indicators fighting each other on your screen.</p>
+        </div>
+        <div class="method-step">
+          <span class="phase mono">PHASE 3</span>
+          <h4>Execution rules</h4>
+          <p>A written checklist for entries, stops, and scale-outs — so the decision is made before you're emotional.</p>
+        </div>
+        <div class="method-step">
+          <span class="phase mono">PHASE 4</span>
+          <h4>Review loop</h4>
+          <p>Weekly trade journal audits in the live sessions. Patterns in your losses get caught before they compound.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="curriculum">
+  <div class="wrap">
+    <div class="curriculum">
+      <div>
+        <div class="section-head reveal" style="margin-bottom:8px;">
+          <span class="section-tag">Curriculum</span>
+          <h2>Eight modules. Nothing you won't use.</h2>
+        </div>
+
+        <div class="module reveal">
+          <span class="idx mono">01</span>
+          <div>
+            <h4>Futures mechanics, properly explained</h4>
+            <p>Contracts, mark price vs. last price, funding rates, and why liquidation happens the way it does.</p>
+          </div>
+        </div>
+        <div class="module reveal">
+          <span class="idx mono">02</span>
+          <div>
+            <h4>Position sizing &amp; risk per trade</h4>
+            <p>A repeatable formula for sizing every position to a fixed percentage of account risk — leverage becomes a tool, not a gamble.</p>
+          </div>
+        </div>
+        <div class="module reveal">
+          <span class="idx mono">03</span>
+          <div>
+            <h4>Reading market structure</h4>
+            <p>Trend, range, and liquidity pools — the structural read that informs every entry and exit decision.</p>
+          </div>
+        </div>
+        <div class="module reveal">
+          <span class="idx mono">04</span>
+          <div>
+            <h4>Entry models &amp; confirmation</h4>
+            <p>Three entry frameworks with strict invalidation rules, so "maybe" is never the basis for a trade.</p>
+          </div>
+        </div>
+        <div class="module reveal">
+          <span class="idx mono">05</span>
+          <div>
+            <h4>Stop placement &amp; trade management</h4>
+            <p>Where stops actually belong based on structure and volatility — not an arbitrary percentage.</p>
+          </div>
+        </div>
+        <div class="module reveal">
+          <span class="idx mono">06</span>
+          <div>
+            <h4>Funding rate &amp; carry cost strategy</h4>
+            <p>How to read funding as information, and account for it in your expected trade outcome.</p>
+          </div>
+        </div>
+        <div class="module reveal">
+          <span class="idx mono">07</span>
+          <div>
+            <h4>Building and auditing a trade journal</h4>
+            <p>The exact log format we review live every week, built to expose your real edge — or lack of one.</p>
+          </div>
+        </div>
+        <div class="module reveal">
+          <span class="idx mono">08</span>
+          <div>
+            <h4>Trading psychology under leverage</h4>
+            <p>Why leveraged positions distort decision-making, and the pre-trade routine that keeps you rule-bound.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sticky-card reveal">
+        <span class="section-tag" style="margin-bottom:0;">Cohort Pricing</span>
+        <h3>The Futures Framework</h3>
+        <div class="price-row">
+          <span class="price mono">$697</span>
+          <span class="was mono">$980</span>
+        </div>
+        <p class="price-note">One-time payment · July cohort · price increases at next cohort</p>
+
+        <ul class="check-list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> 8 core modules, lifetime access &amp; updates</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> 3 live trade-review calls per week</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> 1:1 risk audit of your trading plan</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Private trader community &amp; journal templates</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> 14-day access guarantee, refund if unused</li>
+        </ul>
+
+        <a href="#enroll" class="btn-primary">Reserve Your Seat</a>
+        <p class="fine">Limited to 40 traders per cohort for review-call quality.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">From the Last Cohort</span>
+      <h2>What changed for them wasn't luck. It was process.</h2>
+    </div>
+
+    <div class="quote-grid">
+      <div class="quote-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"I stopped sizing positions by feel. My drawdowns are smaller and honestly more boring now — which is exactly what I needed."</p>
+        <div class="quote-who">
+          <div class="quote-avatar mono">DK</div>
+          <div>
+            <div class="name">D. Kessler</div>
+            <div class="role">Cohort, March</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"The funding rate module alone explained three trades I never understood why I lost. Wish I'd had this a year ago."</p>
+        <div class="quote-who">
+          <div class="quote-avatar mono">RA</div>
+          <div>
+            <div class="name">R. Ahmadi</div>
+            <div class="role">Cohort, March</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal">
+        <div class="stars">★★★★★</div>
+        <p>"The live trade reviews are the real value. Watching my entries get picked apart in real time was humbling and useful."</p>
+        <div class="quote-who">
+          <div class="quote-avatar mono">JT</div>
+          <div>
+            <div class="name">J. Torres</div>
+            <div class="role">Cohort, January</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-tag">Before You Enroll</span>
+      <h2>Common questions</h2>
+    </div>
+
+    <div class="faq-list reveal" style="max-width:760px;">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Will this guarantee I become profitable? <span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">No program can guarantee that, and we won't tell you otherwise. Futures trading is leveraged and carries a real risk of losing your full position. What this course gives you is a structured risk framework and direct feedback on your process — the inputs you actually control. The outcome is still yours to earn.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">I'm new to crypto entirely. Is this too advanced? <span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Module 1 starts from the mechanics of a futures contract, assuming no prior experience with derivatives. You should be comfortable with spot crypto basics first. If you're not sure, message us before enrolling and we'll tell you honestly.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How much capital do I need to start? <span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">We teach sizing as a percentage of your account, so the framework works at any capital level. We do recommend only trading with money you can afford to lose entirely — futures positions can be liquidated in full.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">What if I enroll and it's not for me? <span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">If you've attended fewer than two live sessions and completed less than 20% of the material within 14 days, message support for a full refund. We'd rather you leave honest than stay unhappy.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="enroll">
+  <div class="wrap">
+    <div class="final-cta reveal">
+      <h2>The July cohort opens in a few days.</h2>
+      <p>Forty seats, three live calls a week, and a framework built to keep you in the game long enough to get good at it.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn-primary">Reserve Your Seat — $697</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="risk-box reveal">
+      <span class="risk-label mono">RISK DISCLOSURE</span>
+      Trading crypto futures involves substantial risk and leverage, and most retail accounts lose money trading these products. Past results shared by other students are individual outcomes and do not guarantee future performance for you. Nothing in this course constitutes financial advice, and you should only trade with capital you can afford to lose. Please trade responsibly and consider your own financial situation before enrolling.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="brand">Pip&nbsp;&amp;&nbsp;Position <span class="tick">/FUT</span></div>
+      <div class="footer-links">
+        <a href="#method">Method</a>
+        <a href="#curriculum">Curriculum</a>
+        <a href="#faq">FAQ</a>
+        <a href="#">Risk Disclosure</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom mono">
+      © 2026 Pip &amp; Position. Educational content only — not financial advice. Trade at your own risk.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    const ans = item.querySelector('.faq-a');
+    btn.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(other => {
+        if(other !== item){
+          other.classList.remove('open');
+          other.querySelector('.faq-a').style.maxHeight = null;
+          other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        }
+      });
+      if(isOpen){
+        item.classList.remove('open');
+        ans.style.maxHeight = null;
+        btn.setAttribute('aria-expanded','false');
+      } else {
+        item.classList.add('open');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.12});
+  reveals.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
